@@ -90,20 +90,6 @@ public class QRActivity extends Activity implements View.OnClickListener, Sensor
      * 初始化参数
      */
     private void initParm() {
-        switch (options.getSCREEN_ORIENTATION()) {
-            case QrConfig.SCREEN_LANDSCAPE:
-                setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
-                break;
-            case QrConfig.SCREEN_PORTRAIT:
-                setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-                break;
-            case QrConfig.SCREEN_SENSOR:
-                setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR);
-                break;
-            default:
-                setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-                break;
-        }
         Symbol.scanType = options.getScan_type();
         Symbol.scanFormat = options.getCustombarcodeformat();
         Symbol.is_only_scan_center = options.isOnly_center();

@@ -49,9 +49,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private RadioButton rb_qrcode;
     private RadioButton rb_bcode;
     private RadioButton rb_all;
-    private RadioButton rb_screen_sx;
-    private RadioButton rb_screen_hx;
-    private RadioButton rb_screen_auto;
     private EditText et_loop_scan_time;
     private RadioButton rb_scanline_radar;
     private RadioButton rb_scanline_grid;
@@ -110,13 +107,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         rb_qrcode = (RadioButton) findViewById(R.id.rb_qrcode);
         rb_bcode = (RadioButton) findViewById(R.id.rb_bcode);
         rb_all = (RadioButton) findViewById(R.id.rb_all);
-        rb_screen_hx = (RadioButton) findViewById(R.id.rb_screen_hx);
-        rb_screen_sx = (RadioButton) findViewById(R.id.rb_screen_sx);
-        rb_screen_auto = (RadioButton) findViewById(R.id.rb_screen_auto);
         et_loop_scan_time = (EditText) findViewById(R.id.et_loop_scan_time);
 
         rb_qrcode.setChecked(true);
-        rb_screen_sx.setChecked(true);
 
         rb_scanline_radar = (RadioButton) findViewById(R.id.rb_scanline_radar);
         rb_scanline_radar.setOnClickListener(this);
@@ -167,13 +160,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             scan_type = QrConfig.TYPE_BARCODE;
             scan_view_type = QrConfig.SCANVIEW_TYPE_BARCODE;
         }
-        if (rb_screen_auto.isChecked()) {
-            screen = QrConfig.SCREEN_SENSOR;
-        } else if (rb_screen_sx.isChecked()) {
-            screen = QrConfig.SCREEN_PORTRAIT;
-        } else if (rb_screen_hx.isChecked()) {
-            screen = QrConfig.SCREEN_LANDSCAPE;
-        }
 
         if (rb_scanline_radar.isChecked()) {
             line_style = ScanLineView.style_radar;
@@ -209,7 +195,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 .setAutoZoom(cb_auto_zoom.isChecked())//是否开启自动缩放(实验性功能，不建议使用)
                 .setFingerZoom(cb_finger_zoom.isChecked())//是否开始双指缩放
                 .setDoubleEngine(cb_double_engine.isChecked())//是否开启双引擎识别(仅对识别二维码有效，并且开启后只识别框内功能将失效)
-                .setScreenOrientation(screen)//设置屏幕方式
                 .setOpenAlbumText("选择要识别的图片")//打开相册的文字
                 .setLooperScan(cb_loop_scan.isChecked())//是否连续扫描二维码
                 .setLooperWaitTime(Integer.parseInt(et_loop_scan_time.getText().toString()) * 1000)//连续扫描间隔时间
@@ -217,6 +202,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 .setAutoLight(cb_auto_light.isChecked())//自动灯光
                 .setShowVibrator(cb_have_vibrator.isChecked())//是否震动提醒
                 .create();
+
         QrManager.getInstance().init(qrConfig).startScan(MainActivity.this, new QrManager.OnScanResultCallback() {
             @Override
             public void onScanSuccess(ScanResult result) {
